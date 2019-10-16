@@ -8,11 +8,11 @@
   "scripts": {
     "predeploy": "nuxt generate",
     "deploy": "gh-pages -d dist",
-    "dev": "cross-env NODE_ENV=development nuxt",
-    "build": "cross-env NODE_ENV=development nuxt build",
-    "start": "cross-env NODE_ENV=development nuxt start",
+    "dev": "nuxt",
+    "build": "cross-env NODE_ENV=dev_built nuxt build",
+    "start": "cross-env NODE_ENV=dev_built nuxt start",
     "generate": "cross-env NODE_ENV=production nuxt generate",
-    "generatedev": "cross-env NODE_ENV=development nuxt generate",
+    "generatedev": "cross-env NODE_ENV=dev_built nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest"
   },

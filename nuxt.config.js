@@ -1,6 +1,6 @@
 import colors from "vuetify/es5/util/colors";
 
-const routerBase = process.env.NODE_ENV === "production" ? "/nuxt_pwa_test/" : "./";
+const routerBase = process.env.NODE_ENV === "production" ? "/nuxt_pwa_test/" : process.env.NODE_ENV === "dev_built" ? "./" : '/';
 console.log(process.env.NODE_ENV);
 
 export default {

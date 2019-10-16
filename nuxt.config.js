@@ -1,5 +1,11 @@
 import colors from 'vuetify/es5/util/colors'
 
+// const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+//   router: {
+//     base: '/nuxt_pwa_test/'
+//   }
+// } : {}
+
 export default {
   mode: 'spa',
   /*
@@ -14,7 +20,7 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: './favicon.ico' }
     ]
   },
   /*
@@ -75,5 +81,8 @@ export default {
     */
     extend (config, ctx) {
     }
+  },
+  router: {
+    base: '/nuxt_pwa_test/'
   }
 }

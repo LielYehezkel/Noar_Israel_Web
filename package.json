@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "My super-excellent Nuxt.js project",
   "author": "yovelsapir",
+  "homepage": "https://yovelsapir.github.io/nuxt_pwa_test",
   "private": true,
   "scripts": {
+    "predeploy": "nuxt generate",
+    "deploy": "gh-pages -d dist",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
@@ -17,15 +20,17 @@
     "@nuxtjs/pwa": "^3.0.0-0"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.0.0",
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/eslint-module": "^1.0.0",
+    "@nuxtjs/vuetify": "^1.0.0",
+    "@vue/test-utils": "^1.0.0-beta.27",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
     "eslint": "^6.1.0",
     "eslint-plugin-nuxt": ">=0.4.2",
-    "@vue/test-utils": "^1.0.0-beta.27",
-    "babel-jest": "^24.1.0",
+    "gh-pages": "^2.1.1",
     "jest": "^24.1.0",
+    "push-dir": "^0.4.1",
     "vue-jest": "^4.0.0-0"
   }
 }

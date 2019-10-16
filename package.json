@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "predeploy": "nuxt generate",
-    "deploy": "gh-pages -d dist",
+    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
     "dev": "nuxt",
     "build": "cross-env NODE_ENV=dev_built nuxt build",
     "start": "cross-env NODE_ENV=dev_built nuxt start",

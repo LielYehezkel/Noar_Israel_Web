@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "My super-excellent Nuxt.js project",
   "author": "yovelsapir",
-  "homepage": "https://yovelsapir.github.io/nuxt_pwa_test",
+  "homepage": "https://yovelsapir.github.io/Noar_Israel_Admin_Panel",
   "private": true,
   "scripts": {
     "predeploy": "nuxt generate",

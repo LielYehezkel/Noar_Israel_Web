@@ -1,10 +1,10 @@
 import colors from 'vuetify/es5/util/colors'
 
-// const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
-//   router: {
-//     base: '/nuxt_pwa_test/'
-//   }
-// } : {}
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+  router: {
+    base: '/nuxt_pwa_test/'
+  }
+} : {}
 
 export default {
   mode: 'spa',
@@ -42,7 +42,7 @@ export default {
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
+    // '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify'
   ],
   /*
@@ -83,6 +83,6 @@ export default {
     }
   },
   router: {
-    base: '/nuxt_pwa_test/'
+    ...routerBase
   }
 }

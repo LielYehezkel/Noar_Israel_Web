@@ -55,7 +55,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ["@nuxtjs/pwa"],
+  modules: ["@nuxtjs/pwa", ['@nuxtjs/component-cache', { maxAge: 1000 * 60 * 60 * 24 * 30 }]],
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module

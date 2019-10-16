@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app light>
     <h1>Example v1</h1>
   </v-app>
 </template>

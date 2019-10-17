@@ -57,19 +57,20 @@
                   </template>
                 </v-toolbar>
               </div>
-              <div id="dashboard_view"></div>
+              <div id="dashboard_view">
+                <nuxt />
+              </div>
             </div>
           </v-col>
         </v-row>
       </v-container>
     </div>
-
-    <!-- <nuxt /> -->
   </v-app>
 </template>
 
 <script>
 export default {
+  
   data: () => ({
     items: [
       { title: "עמוד ראשי", icon: "mdi-view-dashboard" },
@@ -108,6 +109,6 @@ export default {
 #dashboard_view {
   height: 100%;
   width: 100%;
-  background-color: #424242;
+  background-color: #d7d7d7;
 }
 </style>

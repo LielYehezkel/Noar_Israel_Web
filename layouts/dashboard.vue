@@ -110,5 +110,6 @@ export default {
   height: 100%;
   width: 100%;
   background-color: #d7d7d7;
+  overflow-y: auto;
 }
 </style>

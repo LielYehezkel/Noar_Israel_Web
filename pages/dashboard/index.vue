@@ -1,6 +1,12 @@
 <template>
   <v-container fluid class="pr-0 pt-5">
-    <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
+    <v-data-table
+      :headers="headers"
+      :items="desserts"
+      sort-by="calories"
+      class="elevation-1"
+      height="550px"
+    >
       <template v-slot:top>
         <v-toolbar flat color="white">
           <v-toolbar-title>ניהול עבודות</v-toolbar-title>
@@ -174,6 +180,48 @@ export default {
           fat: 25.0,
           carbs: 51,
           protein: 4.9
+        },
+        {
+          name: "KitKat",
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7
+        },
+        {
+          name: "KitKat",
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7
+        },
+        {
+          name: "KitKat",
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7
+        },
+        {
+          name: "KitKat",
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7
+        },
+        {
+          name: "KitKat",
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7
+        },
+        {
+          name: "KitKat",
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7
         },
         {
           name: "KitKat",

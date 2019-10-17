@@ -1,20 +1,23 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-    </v-flex>
-  </v-layout>
+  <v-row align="center" justify="center">
+    <v-col cols="6">
+      <login-form />
+    </v-col>
+  </v-row>
 </template>
 
 <script>
-import VuetifyLogo from "~/components/VuetifyLogo.vue";
+import { validationMixin } from "vuelidate";
+import { required, maxLength, email } from "vuelidate/lib/validators";
+import LoginForm from "~/components/LoginForm";
 
 export default {
   components: {
-    VuetifyLogo
-  }
+    LoginForm
+  },
 };
 </script>
+
+<style scoped>
+
+</style>

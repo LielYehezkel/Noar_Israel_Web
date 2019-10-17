@@ -1,7 +1,6 @@
 import colors from "vuetify/es5/util/colors";
 
 const routerBase = process.env.NODE_ENV === "production" ? "/Noar_Israel_Admin_Panel/" : process.env.NODE_ENV === "dev_built" ? "./" : '/';
-console.log(process.env.NODE_ENV);
 
 export default {
   mode: "spa",

@@ -1,38 +1,39 @@
 <template>
   <v-app light>
-    <v-parallax
-      height="100%"
+    <!-- <v-parallax
+      height="100vh"
       class="pr-0 mr-0 ml-0 pl-0"
       src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-    >
-      <div id="container_body">
-        <v-container fluid class="pt-0 pb-0">
-          <v-row align="start" justify="end">
-            <v-col v-if="showMenu && $vuetify.breakpoint.smAndUp" md="3" xs="12">
-              <dashboard-menu />
-            </v-col>
+      alt="Parallax"
+    ></v-parallax> -->
 
-            <v-col
-              :class="showMenu || !$vuetify.breakpoint.smAndUp ? 'pl-0 pr-0 pt-0 pb-0' : 'pt-0 pb-0 pl-0'"
-              xs="12"
-              :md="showMenu || !$vuetify.breakpoint.smAndUp ? '9' : '12'"
-            >
-              <div class="d-flex flex-column" style="height:100vh;">
-                <div
-                  id="appbar_container"
-                  :class="showMenu && $vuetify.breakpoint.smAndUp ? 'd-flex align-center pl-3 pt-3' : 'd-flex align-center pl-0 pr-0 pt-0 pb-3'"
-                >
-                  <dashboard-appbar />
-                </div>
-                <div id="dashboard_view">
-                  <nuxt />
-                </div>
+    <div id="container_body">
+      <v-container fluid class="pt-0 pb-0">
+        <v-row align="start" justify="end">
+          <v-col v-if="showMenu && $vuetify.breakpoint.smAndUp" md="3" xs="12">
+            <dashboard-menu />
+          </v-col>
+
+          <v-col
+            :class="showMenu || !$vuetify.breakpoint.smAndUp ? 'pl-0 pr-0 pt-0 pb-0' : 'pt-0 pb-0 pl-0 pr-0'"
+            xs="12"
+            :md="showMenu || !$vuetify.breakpoint.smAndUp ? '9' : '12'"
+          >
+            <div class="d-flex flex-column" style="height:100vh;">
+              <div
+                id="appbar_container"
+                :class="showMenu && $vuetify.breakpoint.smAndUp ? 'd-flex align-center pl-3 pt-3' : 'd-flex align-center pl-0 pr-0 pt-0 pb-3'"
+              >
+                <dashboard-appbar />
               </div>
-            </v-col>
-          </v-row>
-        </v-container>
-      </div>
-    </v-parallax>
+              <div id="dashboard_view">
+                <nuxt />
+              </div>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
   </v-app>
 </template>
 

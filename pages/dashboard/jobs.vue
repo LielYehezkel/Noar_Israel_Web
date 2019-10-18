@@ -1,11 +1,11 @@
 <template>
-  <v-container fluid class="pr-1 pt-5">
+  <v-container fluid :class="$vuetify.breakpoint.smAndDown ? 'pr-1 pt-5' : 'pr-3 pl-3'">
     <div class="table_shadow">
       <v-data-table
         :headers="headers"
         :items="desserts"
         sort-by="calories"
-        height="550px"
+        :height="$vuetify.breakpoint.smAndDown ? '100vh' : '550px'"
         style="background-color: rgba(255, 255, 255, 0.90);"
         :fixed-header="true"
       >

@@ -6,7 +6,7 @@
       class="max_menu_height"
       :permanent="true"
     >
-      <v-list-item class="blue darken-2" style="height: 125px;">
+      <v-list-item class="blue darken-2" style="height: 150px;">
         <v-list-item-content>
           <v-list-item-title class="title white--text">נוער ישראל</v-list-item-title>
           <v-list-item-subtitle class="white--text">מערכת ניהול - גירסא 0.1</v-list-item-subtitle>

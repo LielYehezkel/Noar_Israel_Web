@@ -4,12 +4,14 @@
     class="blue darken-2"
     :extended="$vuetify.breakpoint.smAndDown && extendedSlotToggle"
   >
-    <!-- <v-toolbar-title>Title</v-toolbar-title> -->
     <template v-if="$vuetify.breakpoint.smAndDown">
       <v-btn icon @click="toggleExtended">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </template>
+
+    <v-toolbar-title v-if="$vuetify.breakpoint.smAndDown">פאנל ניהול - נוער ישראל</v-toolbar-title>
+
 
     <v-spacer></v-spacer>
 

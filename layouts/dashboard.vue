@@ -8,14 +8,14 @@
       <div id="container_body">
         <v-container fluid class="pt-0 pb-0">
           <v-row align="start" justify="end">
-            <v-col v-if="showMenu && !isMobile" md="3" xs="12">
+            <v-col v-if="showMenu && $vuetify.breakpoint.smAndUp" md="3" xs="12">
               <dashboard-menu />
             </v-col>
 
             <v-col
-              :class="showMenu || isMobile ? 'pl-0 pr-0 pt-0 pb-0' : 'pt-0 pb-0 pl-0'"
+              :class="showMenu || !$vuetify.breakpoint.smAndUp ? 'pl-0 pr-0 pt-0 pb-0' : 'pt-0 pb-0 pl-0'"
               xs="12"
-              :md="showMenu || isMobile ? '9' : '12'"
+              :md="showMenu || !$vuetify.breakpoint.smAndUp ? '9' : '12'"
             >
               <div class="d-flex flex-column" style="height:100vh;">
                 <div id="appbar_container" class="d-flex align-center pl-3">
@@ -43,13 +43,8 @@ export default {
     DashboardMenu
   },
   data: () => ({
-    isMobile: false
+ 
   }),
-  beforeDestroy() {
-    if (typeof window !== "undefined") {
-      window.removeEventListener("resize", this.onResize, { passive: true });
-    }
-  },
   computed: {
     isLoading() {
       return this.$store.state.dashboard.isLoading;
@@ -61,14 +56,8 @@ export default {
   created() {
     console.log(this.$store.state);
   },
-  mounted() {
-    this.onResize();
-    window.addEventListener("resize", this.onResize, { passive: true });
-  },
   methods: {
-    onResize() {
-      this.isMobile = window.innerWidth < 600;
-    }
+   
   }
 };
 </script>

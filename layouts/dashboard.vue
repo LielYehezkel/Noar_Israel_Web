@@ -18,7 +18,10 @@
               :md="showMenu || !$vuetify.breakpoint.smAndUp ? '9' : '12'"
             >
               <div class="d-flex flex-column" style="height:100vh;">
-                <div id="appbar_container" class="d-flex align-center pl-3">
+                <div
+                  id="appbar_container"
+                  :class="showMenu && $vuetify.breakpoint.smAndUp ? 'd-flex align-center pl-3 pt-3' : 'd-flex align-center pl-0 pr-0 pt-0 pb-3'"
+                >
                   <dashboard-appbar />
                 </div>
                 <div id="dashboard_view">
@@ -42,9 +45,7 @@ export default {
     DashboardAppbar,
     DashboardMenu
   },
-  data: () => ({
- 
-  }),
+  data: () => ({}),
   computed: {
     isLoading() {
       return this.$store.state.dashboard.isLoading;
@@ -56,9 +57,7 @@ export default {
   created() {
     console.log(this.$store.state);
   },
-  methods: {
-   
-  }
+  methods: {}
 };
 </script>
 
@@ -76,7 +75,7 @@ export default {
 #appbar_container {
   /* background-color: #fafafa; */
   width: 100%;
-  height: 100px;
+  /* height: 100px; */
 }
 
 #dashboard_view {

@@ -80,7 +80,7 @@ export default {
   font-family: "Varela Round", sans-serif;
   height: 100vh;
   width: 100%;
-  background-color: rgba(238, 238, 238, 0.7);
+  background-color: rgba(255, 255, 255, 0.9);
   overflow: auto;
 }
 

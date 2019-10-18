@@ -15,16 +15,18 @@
 
       <v-divider></v-divider>
 
-      <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" link>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+      <v-list tile dense>
+        <v-list-item-group>
+          <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" nuxt :exact="true">
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
   </v-card>
@@ -34,9 +36,9 @@
 export default {
   data: () => ({
     items: [
-      { title: "עמוד ראשי", icon: "mdi-view-dashboard" },
-      { title: "ניהול עבודות", icon: "mdi-image" },
-      { title: "ניהול הטבות", icon: "mdi-help-box" }
+      { title: "עמוד ראשי", icon: "mdi-view-dashboard", to: "/dashboard/" },
+      { title: "ניהול עבודות", icon: "mdi-image", to: "/dashboard/jobs" },
+      { title: "ניהול הטבות", icon: "mdi-help-box", to: "/dashboard/sales" }
     ],
     right: null
   })

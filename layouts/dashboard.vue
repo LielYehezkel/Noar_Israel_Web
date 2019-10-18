@@ -13,7 +13,7 @@
             </v-col>
 
             <v-col
-              :class="showMenu || isMobile ? 'pl-0 pr-0 pt-0 pb-0' : ''"
+              :class="showMenu || isMobile ? 'pl-0 pr-0 pt-0 pb-0' : 'pt-0 pb-0 pl-0'"
               xs="12"
               :md="showMenu || isMobile ? '9' : '12'"
             >

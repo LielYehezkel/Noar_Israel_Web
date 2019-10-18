@@ -97,7 +97,7 @@ export default {
   overflow-y: auto;
 }
 
-.v-parallax__content {
+.v-parallax > .v-parallax__content {
   padding: 0;
 }
 

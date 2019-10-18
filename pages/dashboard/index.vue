@@ -6,7 +6,7 @@
         :items="desserts"
         sort-by="calories"
         height="550px"
-        fixed-header="true"
+        :fixed-header="true"
       >
         <template v-slot:top>
           <v-toolbar flat color="white">

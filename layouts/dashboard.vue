@@ -92,7 +92,7 @@ export default {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 7px;
 }
 
 /* Track */
@@ -102,11 +102,11 @@ export default {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #1976D2ef;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #1976D2;
 }
 </style>

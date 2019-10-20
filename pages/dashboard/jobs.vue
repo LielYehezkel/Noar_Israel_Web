@@ -4,8 +4,8 @@
       <v-data-table
         :headers="headers"
         :items="desserts"
-        sort-by="calories"
-        :height="$vuetify.breakpoint.smAndDown ? '100vh' : '550px'"
+        sort-by="jobIndex"
+        :height="$vuetify.breakpoint.smAndDown ? '100%' : '550px'"
         style="background-color: rgba(255, 255, 255, 0.90);"
         :fixed-header="true"
       >
@@ -16,7 +16,9 @@
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="500px">
               <template v-slot:activator="{ on }">
-                <v-btn color="primary" dark class="mb-2" v-on="on">עבודה חדשה</v-btn>
+                <v-btn color="primary" tile dark small class="mb-2 mt-2 elevation-3" v-on="on">
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
               </template>
               <v-card>
                 <v-card-title>
@@ -27,35 +29,58 @@
                   <v-container>
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
+                        <v-text-field v-model="editedItem.title" label="שם עסק"></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
+                        <v-text-field v-model="editedItem.description" label="תיאור"></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
+                        <v-text-field v-model="editedItem.location" label="מיקום"></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
+                        <v-text-field v-model="editedItem.age" label="גיל"></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
+                        <v-text-field v-model="editedItem.salary" label="שכר שעתי"></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field v-model="editedItem.jobUrl" label="כתובת אתר"></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field v-model="editedItem.imageBackgroundUrl" label="תמונה"></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field v-model="editedItem.backgroundColor" label="צבע תמונה"></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field v-model="editedItem.employerName" label="שם מעסיק"></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field v-model="editedItem.employerPhone" label="טלפון מעסיק"></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field v-model="editedItem.jobIndex" label="מיקום בדף"></v-text-field>
                       </v-col>
                     </v-row>
                   </v-container>
                 </v-card-text>
 
                 <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                  <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                  <v-btn color="blue darken-1" text @click="close">סגור</v-btn>
+                  <v-btn color="blue darken-1" text @click="save">שמור</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
           </v-toolbar>
         </template>
+        <template v-slot:item.imageBackgroundUrl="{ item }">
+          <v-img :src='item.imageBackgroundUrl' max-width="50px" :alt="item.title" />
+        </template>
+        <template v-slot:item.backgroundColor="{ item }">
+          <div :style="`background-color: rgb(${item.backgroundColor[0]}, ${item.backgroundColor[1]}, ${item.backgroundColor[2]}); width: 15px; height: 15px;`"></div>
+        </template>
         <template v-slot:item.action="{ item }">
-          <v-icon small class="mr-2" @click="editItem(item)">mdi-tooltip-edit</v-icon>
+          <v-icon small @click="editItem(item)">mdi-tooltip-edit</v-icon>
           <v-icon small @click="deleteItem(item)">mdi-delete-circle</v-icon>
         </template>
         <template v-slot:no-data>
@@ -73,38 +98,54 @@ export default {
     dialog: false,
     headers: [
       {
-        text: "Dessert (100g serving)",
-        align: "left",
-        sortable: false,
-        value: "name"
+        text: "שם עסק",
+        value: "title"
       },
-      { text: "Calories", value: "calories" },
-      { text: "Fat (g)", value: "fat" },
-      { text: "Carbs (g)", value: "carbs" },
-      { text: "Protein (g)", value: "protein" },
-      { text: "Actions", value: "action", sortable: false }
+      { text: "תיאור", value: "description", sortable: false },
+      { text: "מיקום", value: "location", sortable: true },
+      { text: "גיל", value: "age", sortable: true },
+      { text: "שכר שעתי", value: "salary", sortable: true },
+      { text: "כתובת אתר", value: "jobUrl", sortable: false },
+      { text: "תמונה", value: "imageBackgroundUrl", sortable: false },
+      { text: "צבע תמונה", value: "backgroundColor", sortable: false },
+      { text: "שם מעסיק", value: "employerName", sortable: true },
+      { text: "טלפון מעסיק", value: "employerPhone", sortable: false },
+      { text: "מיקום בדף", value: "jobIndex", sortable: true },
+      { text: "פעולות", value: "action", sortable: false }
     ],
     desserts: [],
     editedIndex: -1,
     editedItem: {
-      name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
+      title: "",
+      description: "",
+      location: "",
+      age: 0,
+      salary: 24,
+      jobUrl: "",
+      imageBackgroundUrl: "",
+      backgroundColor: [0, 0, 0],
+      employerName: "",
+      employerPhone: "",
+      jobIndex: 0
     },
     defaultItem: {
-      name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
+      title: "",
+      description: "תיאור עסק",
+      location: "ירושלים",
+      age: 0,
+      salary: 24,
+      jobUrl: "www",
+      imageBackgroundUrl: "www",
+      backgroundColor: [0, 255, 0],
+      employerName: "ששי שווילי",
+      employerPhone: "",
+      jobIndex: 0
     }
   }),
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+      return this.editedIndex === -1 ? "עסק חדש" : "עריכת עסק";
     }
   },
 
@@ -122,116 +163,30 @@ export default {
     initialize() {
       this.desserts = [
         {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0
+          title: "בורגראנץ",
+          description: "רשת המבורגרים הכי טובה בארץ",
+          location: "ירושלים",
+          age: 0,
+          salary: 24,
+          jobUrl: "www",
+          imageBackgroundUrl: "https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+          backgroundColor: [75, 0, 0],
+          employerName: "ששי שווילי",
+          employerPhone: "0501230321",
+          jobIndex: 0
         },
         {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7
+          title: "סושי",
+          description: "רשת סושי הכי טובה בארץ",
+          location: "תל אביב",
+          age: 0,
+          salary: 32,
+          jobUrl: "www",
+          imageBackgroundUrl: "https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+          backgroundColor: [0, 255, 122],
+          employerName: "ששי שווילי",
+          employerPhone: "0502334577",
+          jobIndex: 0
         }
       ];
     },
@@ -272,8 +227,8 @@ export default {
 .table_shadow {
   position: relative;
   left: 1px;
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(19, 106, 138, 0.46);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(19, 106, 138, 0.46);
-  box-shadow: 0px 0px 5px 0px rgba(19, 106, 138, 0.46);
+  -webkit-box-shadow: 0px 0px 5px 0px rgb(222, 222, 222);
+  -moz-box-shadow: 0px 0px 5px 0px rgb(222, 222, 222);
+  box-shadow: 0px 0px 5px 0px rgb(222, 222, 222);
 }
 </style>

@@ -65,9 +65,13 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css?family=Varela+Round&display=swap");
 
+html, body {
+  height: 100%;
+}
+
 #container_body {
   font-family: "Varela Round", sans-serif;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.9);
   overflow: auto;

@@ -21,7 +21,7 @@
       ></v-text-field>
       <v-col cols="12">
         <v-row justify="end">
-          <v-btn @click="submit">התחבר</v-btn>
+          <v-btn @click="submit" to="/dashboard/">התחבר</v-btn>
         </v-row>
       </v-col>
     </form>

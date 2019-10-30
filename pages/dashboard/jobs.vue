@@ -38,19 +38,23 @@
                         <v-text-field v-model="editedItem.location" label="מיקום"></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.age" label="גיל"></v-text-field>
+                        <v-text-field type="number" v-model="editedItem.age" label="גיל"></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.salary" label="שכר שעתי"></v-text-field>
+                        <v-text-field type="number" v-model="editedItem.salary" label="שכר שעתי"></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field v-model="editedItem.jobUrl" label="כתובת אתר"></v-text-field>
                       </v-col>
-                      <v-col cols="12" sm="6" md="4">
+                      <v-col cols="12" sm="6" md="6">
                         <v-text-field v-model="editedItem.imageBackgroundUrl" label="תמונה"></v-text-field>
                       </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.backgroundColor" label="צבע תמונה"></v-text-field>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-color-picker
+                          v-model="editedItem.backgroundColor"
+                          hide-inputs
+                          hide-mode-switch
+                        ></v-color-picker>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field v-model="editedItem.employerName" label="שם מעסיק"></v-text-field>
@@ -73,11 +77,16 @@
             </v-dialog>
           </v-toolbar>
         </template>
+        <template v-slot:item.jobUrl="{ item }">
+          <a :href="'//' + item.jobUrl" target="_blank">{{item.title}}</a>
+        </template>
         <template v-slot:item.imageBackgroundUrl="{ item }">
-          <v-img :src='item.imageBackgroundUrl' max-width="50px" :alt="item.title" />
+          <v-img :src="item.imageBackgroundUrl" max-width="50px" :alt="item.title" />
         </template>
         <template v-slot:item.backgroundColor="{ item }">
-          <div :style="`background-color: rgb(${item.backgroundColor[0]}, ${item.backgroundColor[1]}, ${item.backgroundColor[2]}); width: 15px; height: 15px;`"></div>
+          <div
+            :style="`background-color: rgb(${item.backgroundColor['r']}, ${item.backgroundColor['g']}, ${item.backgroundColor['b']}); width: 15px; height: 15px;`"
+          ></div>
         </template>
         <template v-slot:item.action="{ item }">
           <v-icon small @click="editItem(item)">mdi-tooltip-edit</v-icon>
@@ -123,7 +132,7 @@ export default {
       salary: 24,
       jobUrl: "",
       imageBackgroundUrl: "",
-      backgroundColor: [0, 0, 0],
+      backgroundColor: { r: 0, g: 0, b: 0 },
       employerName: "",
       employerPhone: "",
       jobIndex: 0
@@ -136,16 +145,19 @@ export default {
       salary: 24,
       jobUrl: "www",
       imageBackgroundUrl: "www",
-      backgroundColor: [0, 255, 0],
+      backgroundColor: { r: 0, g: 0, b: 0 },
       employerName: "ששי שווילי",
       employerPhone: "",
       jobIndex: 0
-    }
+    },
   }),
 
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "עסק חדש" : "עריכת עסק";
+    },
+    backgroundColorInFirebase(backgroundColor) {
+      return [backgroundColor["r"], backgroundColor["g"], backgroundColor["b"]];
     }
   },
 
@@ -168,9 +180,10 @@ export default {
           location: "ירושלים",
           age: 0,
           salary: 24,
-          jobUrl: "www",
-          imageBackgroundUrl: "https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-          backgroundColor: [75, 0, 0],
+          jobUrl: "www.google.com",
+          imageBackgroundUrl:
+            "https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+          backgroundColor: {r: 75, g: 55, b: 22},
           employerName: "ששי שווילי",
           employerPhone: "0501230321",
           jobIndex: 0
@@ -181,9 +194,10 @@ export default {
           location: "תל אביב",
           age: 0,
           salary: 32,
-          jobUrl: "www",
-          imageBackgroundUrl: "https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-          backgroundColor: [0, 255, 122],
+          jobUrl: "www.youtube.com",
+          imageBackgroundUrl:
+            "https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+          backgroundColor: {r: 0, g: 255, b: 122},
           employerName: "ששי שווילי",
           employerPhone: "0502334577",
           jobIndex: 0

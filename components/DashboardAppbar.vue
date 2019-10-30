@@ -12,7 +12,6 @@
 
     <v-toolbar-title v-if="$vuetify.breakpoint.smAndDown">פאנל ניהול - נוער ישראל</v-toolbar-title>
 
-
     <v-spacer></v-spacer>
 
     <template v-if="extendedSlot && extendedSlotToggle" #extension>
@@ -26,6 +25,9 @@
     <template v-if="$vuetify.breakpoint.smAndUp">
       <v-btn icon @click="toggleMenu">
         <v-icon>{{showMenu ? 'mdi-window-maximize' : 'mdi-window-minimize'}}</v-icon>
+      </v-btn>
+      <v-btn icon nuxt to="/">
+        <v-icon>mdi-exit-to-app</v-icon>
       </v-btn>
     </template>
   </v-toolbar>

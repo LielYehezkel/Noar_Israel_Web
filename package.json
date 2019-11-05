@@ -9,7 +9,7 @@
     "predeploy": "nuxt generate",
     "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
     "dev": "nuxt",
-    "build": "cross-env NODE_ENV=dev_built nuxt build",
+    "build": "cross-env NODE_ENV=production nuxt build",
     "start": "cross-env NODE_ENV=dev_built nuxt start",
     "generate": "cross-env NODE_ENV=production nuxt generate",
     "generatedev": "cross-env NODE_ENV=dev_built nuxt generate",
@@ -18,10 +18,14 @@
   },
   "dependencies": {
     "@nuxtjs/pwa": "^3.0.0-0",
-    "nuxt": "^2.0.0",
-    "vuelidate": "^0.7.4"
+    "firebase": "^7.2.2",
+    "js-cookie": "^2.2.1",
+    "nuxt": "^2.10.2",
+    "vuelidate": "^0.7.4",
+    "vuex-persistedstate": "^2.7.0"
   },
   "devDependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/eslint-module": "^1.0.0",
     "@nuxtjs/vuetify": "^1.0.0",

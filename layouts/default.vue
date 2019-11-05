@@ -7,13 +7,13 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
+      <!-- <v-btn icon>
         <v-icon class="red--text">mdi-heart</v-icon>
       </v-btn>
 
       <v-btn icon>
         <v-icon class="red--text">mdi-magnify</v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-app-bar>
 
     <v-container id="container_body" fluid fill-height>

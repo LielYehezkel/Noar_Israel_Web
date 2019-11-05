@@ -8,6 +8,7 @@
 export default {
   layout: "dashboard",
   data: () => ({
+    tests: "dashboard",
     dialog: false,
     headers: [
       {

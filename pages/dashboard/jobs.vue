@@ -3,8 +3,8 @@
     <div class="table_shadow">
       <v-data-table
         :headers="headers"
-        :items="desserts"
-        sort-by="jobIndex"
+        :items="jobsItems"
+        sort-by="index"
         :height="$vuetify.breakpoint.smAndDown ? '100%' : '550px'"
         style="background-color: rgba(255, 255, 255, 0.90);"
         :fixed-header="true"
@@ -16,7 +16,7 @@
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="500px">
               <template v-slot:activator="{ on }">
-                <v-btn color="primary" tile dark small class="mb-2 mt-2 elevation-3" v-on="on">
+                <v-btn color="primary" tile dark small class="mb-2 mt-2 elevation-3" @click="editItem">
                   <v-icon>mdi-plus</v-icon>
                 </v-btn>
               </template>
@@ -63,7 +63,7 @@
                         <v-text-field v-model="editedItem.employerPhone" label="טלפון מעסיק"></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.jobIndex" label="מיקום בדף"></v-text-field>
+                        <v-text-field type="number" v-model="editedItem.index" label="מיקום בדף"></v-text-field>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -101,8 +101,32 @@
 </template>
 
 <script>
+// TODO: add validations.
+
 export default {
   layout: "dashboard",
+  async asyncData(context) {
+    const { db } = require("../../services/firebase");
+    const jobs = await db.collection("noarJobs").get();
+    return {
+      db: db,
+      jobsItems: jobs.docs.map(job => {
+        // job.backgroundColor = `job.backgroundColor[0]`;
+        let jobData = job.data();
+        jobData.id = job.id;
+        jobData.backgroundColor = {
+          r: jobData.backgroundColor[0],
+          g: jobData.backgroundColor[1],
+          b: jobData.backgroundColor[2],
+          a: 1
+        };
+        jobData.employerName = jobData.employer.name;
+        jobData.employerPhone = jobData.employer.phone;
+        delete jobData.employer;
+        return jobData;
+      })
+    };
+  },
   data: () => ({
     dialog: false,
     headers: [
@@ -119,10 +143,10 @@ export default {
       { text: "צבע תמונה", value: "backgroundColor", sortable: false },
       { text: "שם מעסיק", value: "employerName", sortable: true },
       { text: "טלפון מעסיק", value: "employerPhone", sortable: false },
-      { text: "מיקום בדף", value: "jobIndex", sortable: true },
+      { text: "מיקום בדף", value: "index", sortable: true },
       { text: "פעולות", value: "action", sortable: false }
     ],
-    desserts: [],
+    jobsItems: [],
     editedIndex: -1,
     editedItem: {
       title: "",
@@ -132,24 +156,24 @@ export default {
       salary: 24,
       jobUrl: "",
       imageBackgroundUrl: "",
-      backgroundColor: { r: 0, g: 0, b: 0 },
+      backgroundColor: { r: 0, g: 0, b: 0, a: 1 },
       employerName: "",
       employerPhone: "",
-      jobIndex: 0
+      index: 0
     },
     defaultItem: {
-      title: "",
+      title: "כותרת",
       description: "תיאור עסק",
       location: "ירושלים",
       age: 0,
       salary: 24,
-      jobUrl: "www",
-      imageBackgroundUrl: "www",
-      backgroundColor: { r: 0, g: 0, b: 0 },
-      employerName: "ששי שווילי",
-      employerPhone: "",
-      jobIndex: 0
-    },
+      jobUrl: "#",
+      imageBackgroundUrl: "#",
+      backgroundColor: { r: 0, g: 0, b: 0, a: 1 },
+      employerName: "מעסיק",
+      employerPhone: "0500005000",
+      index: 0
+    }
   }),
 
   computed: {
@@ -167,54 +191,28 @@ export default {
     }
   },
 
-  created() {
-    this.initialize();
-  },
-
   methods: {
-    initialize() {
-      this.desserts = [
-        {
-          title: "בורגראנץ",
-          description: "רשת המבורגרים הכי טובה בארץ",
-          location: "ירושלים",
-          age: 0,
-          salary: 24,
-          jobUrl: "www.google.com",
-          imageBackgroundUrl:
-            "https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-          backgroundColor: {r: 75, g: 55, b: 22},
-          employerName: "ששי שווילי",
-          employerPhone: "0501230321",
-          jobIndex: 0
-        },
-        {
-          title: "סושי",
-          description: "רשת סושי הכי טובה בארץ",
-          location: "תל אביב",
-          age: 0,
-          salary: 32,
-          jobUrl: "www.youtube.com",
-          imageBackgroundUrl:
-            "https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-          backgroundColor: {r: 0, g: 255, b: 122},
-          employerName: "ששי שווילי",
-          employerPhone: "0502334577",
-          jobIndex: 0
-        }
-      ];
-    },
-
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.editedIndex = this.jobsItems.indexOf(item);
+      this.editedItem = Object.assign({}, this.editedIndex > -1 ? item : this.defaultItem);
       this.dialog = true;
     },
 
-    deleteItem(item) {
-      const index = this.desserts.indexOf(item);
-      confirm("Are you sure you want to delete this item?") &&
-        this.desserts.splice(index, 1);
+    async deleteItem(item) {
+      try {
+        const index = this.jobsItems.indexOf(item);
+
+        const jobRef = this.db
+          .collection("noarJobs")
+          .doc(this.jobsItems[index].id);
+
+        confirm("Are you sure you want to delete this item?");
+        await jobRef.delete();
+        this.jobsItems.splice(index, 1);
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
     },
 
     close() {
@@ -225,13 +223,96 @@ export default {
       }, 300);
     },
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-      } else {
-        this.desserts.push(this.editedItem);
+    async save() {
+      try {
+        if (this.editedIndex > -1) {
+          let diffKeys = {};
+          let employer = {};
+
+          Object.keys(this.jobsItems[this.editedIndex]).forEach(key => {
+            if (
+              this.jobsItems[this.editedIndex][key] !== this.editedItem[key]
+            ) {
+              if (key === "salary" || key === "index" || key === "age") {
+                diffKeys[key] = parseInt(this.editedItem[key]);
+              } else {
+                diffKeys[key] = this.editedItem[key];
+              }
+            }
+          });
+
+          if (
+            diffKeys["employerName"] !== undefined ||
+            diffKeys["employerPhone"] !== undefined
+          ) {
+            diffKeys.employer = {
+              name: this.editedItem["employerName"],
+              phone: this.editedItem["employerPhone"]
+            };
+            delete diffKeys["employerName"];
+            delete diffKeys["employerPhone"];
+          }
+
+          const backgroundColor = [
+            diffKeys.backgroundColor.r,
+            diffKeys.backgroundColor.g,
+            diffKeys.backgroundColor.b
+          ];
+          diffKeys.backgroundColor = backgroundColor;
+
+          const jobRef = this.db
+            .collection("noarJobs")
+            .doc(this.jobsItems[this.editedIndex].id);
+
+          const jobUpdated = await jobRef.update({
+            ...diffKeys
+          });
+
+          Object.assign(this.jobsItems[this.editedIndex], this.editedItem);
+        } else {
+          // add job
+          const employerName = this.editedItem["employerName"];
+          const employerPhone = this.editedItem["employerPhone"];
+          const backgroundColor = [
+            this.editedItem["backgroundColor"].r,
+            this.editedItem["backgroundColor"].g,
+            this.editedItem["backgroundColor"].b
+          ];
+
+          delete this.editedItem["employerName"];
+          delete this.editedItem["employerPhone"];
+          delete this.editedItem["backgroundColor"];
+
+          this.editedItem["salary"] = parseInt(this.editedItem["salary"]);
+          this.editedItem["index"] = parseInt(this.editedItem["index"]);
+          this.editedItem["age"] = parseInt(this.editedItem["age"]);
+
+          const jobAdded = await this.db.collection("noarJobs").add({
+            ...this.editedItem,
+            employer: {
+              name: employerName,
+              phone: employerPhone
+            },
+            backgroundColor
+          });
+
+          this.jobsItems.push({
+            id: jobAdded.id,
+            ...this.editedItem,
+            employerName,
+            employerPhone,
+            backgroundColor: {
+              r: backgroundColor[0],
+              g: backgroundColor[1],
+              b: backgroundColor[2],
+            }
+          });
+        }
+        this.close();
+      } catch (error) {
+        console.error(error);
+        throw error;
       }
-      this.close();
     }
   }
 };

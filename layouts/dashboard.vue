@@ -5,7 +5,7 @@
       class="pr-0 mr-0 ml-0 pl-0"
       src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
       alt="Parallax"
-    ></v-parallax> -->
+    ></v-parallax>-->
 
     <div id="container_body">
       <v-container fluid class="pt-0 pb-0">
@@ -42,6 +42,7 @@ import DashboardAppbar from "../components/DashboardAppbar";
 import DashboardMenu from "../components/DashboardMenu";
 
 export default {
+  middleware: "authenticated",
   components: {
     DashboardAppbar,
     DashboardMenu
@@ -65,7 +66,8 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css?family=Varela+Round&display=swap");
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -106,11 +108,11 @@ html, body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #1976D2ef;
+  background: #1976d2ef;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #1976D2;
+  background: #1976d2;
 }
 </style>

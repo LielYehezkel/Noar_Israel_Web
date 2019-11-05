@@ -26,7 +26,7 @@
       <v-btn icon @click="toggleMenu">
         <v-icon>{{showMenu ? 'mdi-window-maximize' : 'mdi-window-minimize'}}</v-icon>
       </v-btn>
-      <v-btn icon nuxt to="/">
+      <v-btn icon nuxt @click="logout">
         <v-icon>mdi-exit-to-app</v-icon>
       </v-btn>
     </template>
@@ -52,6 +52,10 @@ export default {
     },
     toggleExtended() {
       this.extendedSlotToggle = !this.extendedSlotToggle;
+    },
+    async logout() {
+      await this.$store.dispatch("users/signOut");
+      this.$router.push("/");
     }
   }
 };

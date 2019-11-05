@@ -1,6 +1,7 @@
 import colors from "vuetify/es5/util/colors";
+require('dotenv').config();
 
-const routerBase = process.env.NODE_ENV === "production" ? "/Noar_Israel_Admin_Panel/" : process.env.NODE_ENV === "dev_built" ? "./" : '/';
+// const routerBase = process.env.NODE_ENV === "production" ? "/Noar_Israel_Admin_Panel/" : process.env.NODE_ENV === "dev_built" ? "./" : '/';
 
 export default {
   mode: "spa",
@@ -42,7 +43,9 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    // "@plugins/fireauth"
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -55,6 +58,23 @@ export default {
    ** Nuxt.js modules
    */
   modules: ["@nuxtjs/pwa"],
+
+  pwa: {
+    manifest: {
+      name: 'Noar IL',
+      lang: 'he'
+    }
+  },
+
+  env: {
+    NUXT_ENV_API_KEY: process.env.NUXT_ENV_API_KEY,
+    NUXT_ENV_AUTH_DOMAIN: process.env.NUXT_ENV_AUTH_DOMAIN,
+    NUXT_ENV_DATABASE_URL: process.env.NUXT_ENV_DATABASE_URL,
+    NUXT_ENV_PROJECT_ID: process.env.NUXT_ENV_PROJECT_ID,
+    NUXT_ENV_STORAGE_BUCKET: process.env.NUXT_ENV_STORAGE_BUCKET,
+    NUXT_ENV_MESSAGE_SENDER_ID: process.env.NUXT_ENV_MESSAGE_SENDER_ID,
+    NUXT_ENV_APP_ID: process.env.NUXT_ENV_APP_ID
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -85,7 +105,7 @@ export default {
      */
     extend(config, ctx) {}
   },
-  router: {
-    base: routerBase
-  }
+  // router: {
+  //   middleware: ["authenticated"]
+  // }
 };

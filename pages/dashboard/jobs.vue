@@ -1,6 +1,9 @@
 <template>
   <v-container fluid :class="$vuetify.breakpoint.smAndDown ? 'pr-3 pl-3' : 'pr-1 pt-5'">
-    <div class="table_shadow">
+    <div v-if="isLoading" class="d-flex align-center justify-center" style="height: 75vh;">
+      <v-progress-circular :size="70" :width="7" color="purple" indeterminate></v-progress-circular>
+    </div>
+    <div v-if="!isLoading" class="table_shadow">
       <v-data-table
         :headers="headers"
         :items="jobsItems"
@@ -16,7 +19,14 @@
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="500px">
               <template v-slot:activator="{ on }">
-                <v-btn color="primary" tile dark small class="mb-2 mt-2 elevation-3" @click="editItem">
+                <v-btn
+                  color="primary"
+                  tile
+                  dark
+                  small
+                  class="mb-2 mt-2 elevation-3"
+                  @click="editItem"
+                >
                   <v-icon>mdi-plus</v-icon>
                 </v-btn>
               </template>
@@ -108,6 +118,7 @@ export default {
   async asyncData(context) {
     const { db } = require("../../services/firebase");
     const jobs = await db.collection("noarJobs").get();
+
     return {
       db: db,
       jobsItems: jobs.docs.map(job => {
@@ -182,7 +193,14 @@ export default {
     },
     backgroundColorInFirebase(backgroundColor) {
       return [backgroundColor["r"], backgroundColor["g"], backgroundColor["b"]];
+    },
+    isLoading() {
+      return this.$store.state.dashboard.isLoading;
     }
+  },
+
+  mounted() {
+    this.$store.commit("dashboard/setLoading", false);
   },
 
   watch: {
@@ -194,12 +212,17 @@ export default {
   methods: {
     editItem(item) {
       this.editedIndex = this.jobsItems.indexOf(item);
-      this.editedItem = Object.assign({}, this.editedIndex > -1 ? item : this.defaultItem);
+      this.editedItem = Object.assign(
+        {},
+        this.editedIndex > -1 ? item : this.defaultItem
+      );
       this.dialog = true;
     },
 
     async deleteItem(item) {
       try {
+        this.$store.commit("dashboard/setLoading", true);
+
         const index = this.jobsItems.indexOf(item);
 
         const jobRef = this.db
@@ -209,6 +232,8 @@ export default {
         confirm("Are you sure you want to delete this item?");
         await jobRef.delete();
         this.jobsItems.splice(index, 1);
+
+        this.$store.commit("dashboard/setLoading", false);
       } catch (error) {
         console.log(error);
         throw error;
@@ -225,6 +250,7 @@ export default {
 
     async save() {
       try {
+        this.$store.commit("dashboard/setLoading", true);
         if (this.editedIndex > -1) {
           let diffKeys = {};
           let employer = {};
@@ -304,10 +330,11 @@ export default {
             backgroundColor: {
               r: backgroundColor[0],
               g: backgroundColor[1],
-              b: backgroundColor[2],
+              b: backgroundColor[2]
             }
           });
         }
+         this.$store.commit("dashboard/setLoading", false);
         this.close();
       } catch (error) {
         console.error(error);

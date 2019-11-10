@@ -5,16 +5,19 @@
     <v-container fluid>
       <v-row>
         <v-col v-for="(item, i) in categories" :key="i" cols="4">
-          <v-card class="ma-3 pa-6" outlined flat>
+          <v-card class="ma-0 pa-3" outlined flat>
             <v-card-title>
-              <v-flex class="d-flex justify-space-between align-center">
-                <v-span>{{item.name}}</v-span>
-                <v-btn flat text @click="listItems[i].show ? null : showQuestions(item.id, i)">
-                  <v-icon>mdi-arrow-down</v-icon>
+              <div class="d-flex justify-space-between align-center" style="width: 100%;">
+                <span>{{item.name}}</span>
+                <v-btn
+                  text
+                  @click="listItems[i].show ? hideQuestions(i) : showQuestions(item.id, i)"
+                >
+                  <v-icon>{{listItems[i].show ? 'mdi-arrow-up' : 'mdi-arrow-down'}}</v-icon>
                 </v-btn>
-              </v-flex>
+              </div>
             </v-card-title>
-            <v-list flat>
+            <v-list flat style="max-height: 1000px;" class="overflow-y-auto">
               <v-list-item-group v-for="(listItem, n) in listItems[i]" :key="n" multiple>
                 <v-list-item
                   v-for="(question, g) in listItem"
@@ -26,17 +29,17 @@
                     <v-list-item-title class="indigo--text font-weight-bold">{{question.authorName}}</v-list-item-title>
                     {{question.description}}
                     <v-list-item-action class="mr-0 ml-0">
-                      <d-flex class="d-flex align-center justify-end" style="width:100%">
-                        <v-btn icon flat tile>
+                      <div class="d-flex align-center justify-end" style="width: 100%">
+                        <v-btn icon tile>
                           <v-icon>mdi-comment-remove-outline</v-icon>
                         </v-btn>
-                        <v-btn icon flat tile>
+                        <v-btn icon tile>
                           <v-icon>mdi-account-alert</v-icon>
                         </v-btn>
-                        <v-btn icon flat tile>
+                        <v-btn icon tile>
                           <v-icon>mdi-arrow-down</v-icon>
                         </v-btn>
-                      </d-flex>
+                      </div>
                     </v-list-item-action>
                   </v-list-item-content>
                 </v-list-item>
@@ -93,7 +96,6 @@ export default {
   },
   methods: {
     async showQuestions(id, index) {
-      console.log(id);
       const categoryQuestions = await this.db
         .collection("categories")
         .doc(id)
@@ -110,8 +112,13 @@ export default {
       this.$set(this.listItems[index], "show", true);
       this.$set(this.listItems[index], "data", data);
 
-      console.log(this.listItems);
-      console.log(this.listItems[index]);
+      //   console.log(id);
+      //   console.log(this.listItems);
+      //   console.log(this.listItems[index]);
+    },
+    hideQuestions(index) {
+      this.$set(this.listItems[index], "show", false);
+      this.$set(this.listItems[index], "data", []);
     }
   }
 };

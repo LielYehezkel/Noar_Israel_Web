@@ -37,6 +37,7 @@ export default {
   data: () => ({
     items: [
       { title: "עמוד ראשי", icon: "mdi-view-dashboard", to: "/dashboard/" },
+      { title: "שאלות ותשובות", icon: "mdi-view-dashboard", to: "/dashboard/questionsAndComments/" },
       { title: "ניהול עבודות", icon: "mdi-image", to: "/dashboard/jobs" },
       { title: "ניהול הטבות", icon: "mdi-help-box", to: "/dashboard/sales" }
     ],
@@ -46,12 +47,6 @@ export default {
 </script>
 
 <style scoped>
-/* .firewatch_gradient {
-  background: #136a8a;
-  background: -webkit-linear-gradient(to center, #267871, #136a8a);
-  background: linear-gradient(to center, #267871, #136a8a);
-} */
-
 .max_menu_height {
   min-height: 95vh;
 }

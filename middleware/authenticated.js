@@ -15,11 +15,11 @@ export default function ({
       try {
         if (user) {
           // const userToken = await user.getIdToken();
-          store.commit("users/SET_USER", {
-            email: user.email,
-            uid: user.uid,
-            // token: userToken
-          });
+          // store.commit("users/SET_USER", {
+          //   email: user.email,
+          //   uid: user.uid,
+          //   // token: userToken
+          // });
 
           // const blockedRoute = /\/dashboard\/*/g;
 

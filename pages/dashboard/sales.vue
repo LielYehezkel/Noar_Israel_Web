@@ -1,7 +1,19 @@
 <template>
-  <v-container fluid :class="$vuetify.breakpoint.smAndDown ? 'pr-3 pl-3' : 'pr-1 pt-5'">
-    <div v-if="isLoading" class="d-flex align-center justify-center" style="height: 75vh;">
-      <v-progress-circular :size="70" :width="7" color="purple" indeterminate></v-progress-circular>
+  <v-container
+    fluid
+    :class="$vuetify.breakpoint.smAndDown ? 'pr-3 pl-3' : 'pr-1 pt-5'"
+  >
+    <div
+      v-if="isLoading"
+      class="d-flex align-center justify-center"
+      style="height: 75vh;"
+    >
+      <v-progress-circular
+        :size="70"
+        :width="7"
+        color="purple"
+        indeterminate
+      ></v-progress-circular>
     </div>
     <div v-if="!isLoading" class="table_shadow">
       <v-data-table
@@ -39,19 +51,40 @@
                   <v-container>
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.title" label="שם עסק"></v-text-field>
+                        <v-text-field
+                          v-model="editedItem.title"
+                          label="שם עסק"
+                        ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.description" label="תיאור"></v-text-field>
+                        <v-text-field
+                          v-model="editedItem.promotionText"
+                          label="קידום"
+                        ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
-                        <v-switch v-model="editedItem.isGold" label="הטבת זהב"></v-switch>
+                        <v-text-field
+                          v-model="editedItem.description"
+                          label="תיאור"
+                        ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.saleUrl" label="כתובת הטבה"></v-text-field>
+                        <v-switch
+                          v-model="editedItem.isGold"
+                          label="הטבת זהב"
+                        ></v-switch>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field
+                          v-model="editedItem.saleUrl"
+                          label="כתובת הטבה"
+                        ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="6">
-                        <v-text-field v-model="editedItem.imageBackgroundUrl" label="תמונה"></v-text-field>
+                        <v-text-field
+                          v-model="editedItem.imageBackgroundUrl"
+                          label="תמונה"
+                        ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="6">
                         <v-color-picker
@@ -61,7 +94,11 @@
                         ></v-color-picker>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field type="number" v-model="editedItem.index" label="מיקום בדף"></v-text-field>
+                        <v-text-field
+                          type="number"
+                          v-model="editedItem.index"
+                          label="מיקום בדף"
+                        ></v-text-field>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -76,7 +113,7 @@
           </v-toolbar>
         </template>
         <template v-slot:item.saleUrl="{ item }">
-          <a :href="'//' + item.saleUrl" target="_blank">{{item.title}}</a>
+          <a :href="'//' + item.saleUrl" target="_blank">{{ item.title }}</a>
         </template>
         <template v-slot:item.imageBackgroundUrl="{ item }">
           <v-img
@@ -88,11 +125,13 @@
         </template>
         <template v-slot:item.backgroundColor="{ item }">
           <div
-            :style="`background-color: rgb(${item.backgroundColor['r']}, ${item.backgroundColor['g']}, ${item.backgroundColor['b']}); width: 15px; height: 15px;`"
+            :style="
+              `background-color: rgb(${item.backgroundColor['r']}, ${item.backgroundColor['g']}, ${item.backgroundColor['b']}); width: 15px; height: 15px;`
+            "
           ></div>
         </template>
         <template v-slot:item.isGold="{ item }">
-          <b>{{item.isGold ? 'כן' : 'לא'}}</b>
+          <b>{{ item.isGold ? "כן" : "לא" }}</b>
         </template>
         <template v-slot:item.action="{ item }">
           <v-icon small @click="editItem(item)">mdi-tooltip-edit</v-icon>
@@ -131,10 +170,8 @@ export default {
   data: () => ({
     dialog: false,
     headers: [
-      {
-        text: "כותרת",
-        value: "title"
-      },
+      { text: "כותרת", value: "title" },
+      { text: "קידום", value: "promotionText" },
       { text: "תיאור", value: "description", sortable: false },
       { text: "הטבת זהב", value: "isGold", sortable: true },
       { text: "כתובת הטבה", value: "saleUrl", sortable: false },
@@ -147,6 +184,7 @@ export default {
     editedIndex: -1,
     editedItem: {
       title: "",
+      promotionText: "",
       description: "",
       isGold: false,
       saleUrl: "",
@@ -156,6 +194,7 @@ export default {
     },
     defaultItem: {
       title: "כותרת",
+      promotionText: "קידום",
       description: "תיאור עסק",
       isGold: false,
       saleUrl: "#",

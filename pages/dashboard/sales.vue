@@ -150,9 +150,9 @@ export default {
   layout: "dashboard",
   async asyncData(context) {
     const { db } = require("../../services/firebase");
-    const sales = await db.collection("salesClub").get();
+    const sales = await db().collection("salesClub").get();
     return {
-      db: db,
+      db: db(),
       salesItems: sales.docs.map(sale => {
         // job.backgroundColor = `job.backgroundColor[0]`;
         let saleData = sale.data();

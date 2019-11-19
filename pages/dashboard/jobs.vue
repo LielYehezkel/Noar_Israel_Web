@@ -117,10 +117,10 @@ export default {
   layout: "dashboard",
   async asyncData(context) {
     const { db } = require("../../services/firebase");
-    const jobs = await db.collection("noarJobs").get();
+    const jobs = await db().collection("noarJobs").get();
 
     return {
-      db: db,
+      db: db(),
       jobsItems: jobs.docs.map(job => {
         // job.backgroundColor = `job.backgroundColor[0]`;
         let jobData = job.data();

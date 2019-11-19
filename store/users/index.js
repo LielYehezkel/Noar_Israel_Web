@@ -15,9 +15,9 @@ export const state = () => ({
   user: null
 });
 
-export const fetch = () => {
-  console.log("fetch");
-}
+// export const fetch = () => {
+//   console.log("fetch");
+// }
 
 export const mutations = {
   SET_USER: (state, account) => {

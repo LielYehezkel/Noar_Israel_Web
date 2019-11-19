@@ -1,5 +1,4 @@
 // import createPersistedState from 'vuex-persistedstate'
-import Cookie from 'js-cookie'
 import {
   auth
 } from "@/services/firebase";

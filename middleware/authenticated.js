@@ -1,36 +1,19 @@
-import {
-  auth
-} from '@/services/firebase'
+import { auth } from "@/services/firebase";
 
-export default function ({
-  store,
-  route,
-  redirect
-}) {
+export default function({ route, redirect }) {
   return new Promise(async (resolve, reject) => {
     auth.onAuthStateChanged(async user => {
-      // console.log(user);
       const homeRoute = "/";
-
       try {
         if (user) {
-          // const userToken = await user.getIdToken();
-          // store.commit("users/SET_USER", {
-          //   email: user.email,
-          //   uid: user.uid,
-          //   // token: userToken
-          // });
-
-          // const blockedRoute = /\/dashboard\/*/g;
-
-          if (user && route.path === homeRoute) {
+          const currentUserToken = await user.getIdTokenResult();
+          if (currentUserToken.claims.admin && route.path === homeRoute) {
             redirect("/dashboard");
           }
 
           resolve();
-
         } else {
-          if (user && route.path != homeRoute) {
+          if (route.path !== homeRoute) {
             redirect("/");
           }
           resolve();
@@ -40,6 +23,6 @@ export default function ({
         reject();
         throw error;
       }
-    })
+    });
   });
 }

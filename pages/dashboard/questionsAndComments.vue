@@ -1,10 +1,16 @@
 <template>
   <v-container fluid class="pr-1 pt-5">
     <h1 class="indigo--text text-center">שאלות ותשובות</h1>
-
     <v-container fluid>
       <v-row>
-        <v-col v-for="(category, i) in categories" :key="i" cols="4">
+        <v-col
+          v-for="(category, i) in categories"
+          :key="i"
+          cols="12"
+          md="6"
+          lg="4"
+          xl="3"
+        >
           <v-card class="ma-0 pa-1" outlined flat>
             <!-- :color="`rgba(${item.color[0]}, ${item.color[1]}, ${item.color[2]}, 0.9)`" -->
             <!-- {{question.color}} -->
@@ -152,15 +158,6 @@
                 </v-list-item>
               </v-list-item-group>
             </v-list>
-
-            <!-- <v-list>
-              <v-list-item-group multiple>
-                <v-card v-for="(listItem, index) in listItems.data" :key="index">
-                  {{listItem.description}}
-                  <v-divider v-if="index + 1 < listItems.length" :key="index"></v-divider>
-                </v-card>
-              </v-list-item-group>
-            </v-list>-->
           </v-card>
         </v-col>
       </v-row>
@@ -173,7 +170,9 @@ export default {
   layout: "dashboard",
   async asyncData(context) {
     const { db } = require("../../services/firebase");
-    const categories = await db().collection("categories").get();
+    const categories = await db()
+      .collection("categories")
+      .get();
     const categoriesMapped = categories.docs.map(category => {
       const categoryData = category.data();
       return {
@@ -201,7 +200,7 @@ export default {
     questionsLoadLimit: 20,
     lastQuestionDocument: null,
     commentsLoadLimit: 20,
-    lastCommentDocument: null,
+    lastCommentDocument: null
   }),
   computed: {
     listItemIndex(id) {

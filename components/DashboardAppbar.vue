@@ -16,9 +16,7 @@
 
     <template v-if="extendedSlot && extendedSlotToggle" #extension>
       <v-toolbar-items>
-        <v-btn text nuxt exact to="/dashboard/">עמוד ראשי</v-btn>
-        <v-btn text nuxt exact to="/dashboard/jobs">ניהול עבודות</v-btn>
-        <v-btn text nuxt exact to="/dashboard/sales">ניהול הטבות</v-btn>
+        <v-btn  v-for="(route, i) in dashboardRoutes" :key="i" text nuxt exact :to="route.to">{{route.title}}</v-btn>
       </v-toolbar-items>
     </template>
 
@@ -34,9 +32,12 @@
 </template>
 
 <script>
+import dashboardRoutes from "../constants/dashboardRoutes";
+
 export default {
   data: () => ({
-    extendedSlotToggle: false
+    extendedSlotToggle: false,
+    dashboardRoutes: dashboardRoutes
   }),
   computed: {
     showMenu() {

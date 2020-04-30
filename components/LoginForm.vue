@@ -50,8 +50,8 @@ export default {
   },
 
   data: () => ({
-    email: "meragesh191@gmail.com",
-    password: "Xx4zwUmX"
+    email: "",
+    password: ""
   }),
 
   computed: {
